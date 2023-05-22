@@ -1,5 +1,7 @@
 package com.fengli.app;
 
+import com.sun.org.apache.bcel.internal.generic.SWITCH;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -12,6 +14,11 @@ public class TankFrame extends Frame {
     //坦克的坐标变量
     int x = 200;
     int y = 200;
+    //方向的定义
+    Dir dir = Dir.DOWN;
+
+    //定义一个坦克的速度
+    private static final int SPEED = 10;
 
     public TankFrame(){
         //设置一个窗口(frame就是一个窗口类)
@@ -37,13 +44,27 @@ public class TankFrame extends Frame {
         } );
     }
     //进行画画操作(paint这个方法事被自动调用,就是窗口改变时)
-   @Override
-    public void paint(Graphics g){
 
+    //坦克的移动
+    @Override
+    public void paint(Graphics g){
        g.fillRect ( x,y,50,50 );
-       System.out.println ("1111111");
-//       x += 10;
-//       y += 10;
+
+        switch (dir){
+            case LEFT:
+                x -= SPEED;
+                break;
+            case DOWN:
+                y += SPEED;
+                break;
+            case RIGHT:
+                x += SPEED;
+                break;
+            case UP:
+                y -= SPEED;
+                break;
+
+        }
    }
 
     //键盘监听处理类
@@ -82,6 +103,7 @@ public class TankFrame extends Frame {
                 default:
                     break;
             }
+            setMainTankDir();
             //x += 200;
             //会默认调用paint方法
 //            repaint ();
@@ -112,6 +134,15 @@ public class TankFrame extends Frame {
                 default:
                     break;
             }
+            setMainTankDir();
         }
+
+        private void setMainTankDir () {
+            if(bL) dir = Dir.LEFT;
+            if(bU) dir = Dir.UP;
+            if(bR) dir = Dir.RIGHT;
+            if(bD) dir = Dir.DOWN;
+         }
     }
+
 }
