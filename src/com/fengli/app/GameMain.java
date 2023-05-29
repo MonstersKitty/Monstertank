@@ -1,6 +1,8 @@
 package com.fengli.app;
 
 
+import com.fengli.game.GameFrame;
+
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -10,10 +12,6 @@ import java.awt.event.WindowEvent;
  */
 public class GameMain {
     public static void main ( String[] args ) throws InterruptedException {
-        TankFrame tankFrame = new TankFrame ();
-        while (true){
-            Thread.sleep ( 50 );
-            tankFrame.repaint ();
-        }
+      new GameFrame ();
     }
 }
