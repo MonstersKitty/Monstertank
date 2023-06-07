@@ -8,7 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- *  程序的入口
+ *  程序的入口1
  */
 public class GameMain {
     public static void main ( String[] args ) throws InterruptedException {
