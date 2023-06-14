@@ -18,6 +18,8 @@ public class GameFrame extends Frame implements Runnable {
     public static int gameState;
     //菜单选项
     private int menuIndex;
+    //定义坦克对象
+    private Tank myTank;
 
     /**
      * 对窗口进行初始化
@@ -90,6 +92,11 @@ public class GameFrame extends Frame implements Runnable {
     }
 
     private void drawRun ( Graphics g ) {
+        //绘制黑色的背景
+        g.setColor ( Color.black );
+        g.fillRect ( 0,0,Constant.FRAME_WIDTH,Constant.FRAME_HIGHT );
+
+        myTank.draw ( g );
     }
 
     private void drawAbout ( Graphics g ) {
@@ -172,6 +179,28 @@ public class GameFrame extends Frame implements Runnable {
             }
 
             private void KeyEventRun ( int keyCode ) {
+                switch (keyCode){
+                    case KeyEvent.VK_UP:
+                    case KeyEvent.VK_W:
+                        myTank.setDir ( Tank.DIR_UP );
+                        break;
+                    case KeyEvent.VK_DOWN:
+                    case KeyEvent.VK_S:
+                        myTank.setDir ( Tank.DIR_DOWN );
+                        break;
+                    case KeyEvent.VK_LEFT:
+                    case KeyEvent.VK_D:
+                        myTank.setDir ( Tank.DIR_LEFT );
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                    case KeyEvent.VK_A:
+                        myTank.setDir ( Tank.DIR_RIGHT );
+                        break;
+
+
+
+                }
+
             }
 
             private void KeyEventAbout ( int keyCode ) {
@@ -202,10 +231,23 @@ public class GameFrame extends Frame implements Runnable {
                         }
 //                        repaint ();
                         break;
+                    case KeyEvent.VK_ENTER:
+                        //TODO
+                        //按键enter,开始游戏触发的方法
+                        newGame();
+
 
                 }
             }
 
+            /**
+             *  开始游戏的方法
+             */
+            private void newGame(){
+                gameState = Constant.STATE_RUN;
+                //创建坦克对象,敌人坦克对象
+                myTank = new Tank ( 400,200,Tank.DIR_DOWN );
+            }
             //按键结束执行的事件
             @Override
             public void keyReleased ( KeyEvent e ) {

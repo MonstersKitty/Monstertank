@@ -8,13 +8,13 @@ import java.awt.*;
 public class Constant {
     public static final String GAME_TITLE="坦克大战";
 
-    public static final int FRAME_WIDTH=1000;
+    public static final int FRAME_WIDTH=1500;
 
-    public static final int FRAME_HIGHT=800;
+    public static final int FRAME_HIGHT=1000;
 
 
-    public static final int FRAME_X=1024-FRAME_WIDTH>>1;
-    public static final int FRAME_Y=768 - FRAME_HIGHT>>1;
+    public static final int FRAME_X=1960-FRAME_WIDTH>>1;
+    public static final int FRAME_Y=1024 - FRAME_HIGHT>>1;
 
     /**
      * Y游戏菜单
@@ -36,7 +36,7 @@ public class Constant {
     /**
      * 字体d的设置
      */
-    public static final Font font = new Font ( "宋体",Font.BOLD,25 );
+    public static final Font font = new Font ( "宋体",Font.BOLD,24 );
 
 
 }
