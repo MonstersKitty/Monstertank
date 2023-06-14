@@ -8,9 +8,9 @@ import java.awt.*;
 public class Constant {
     public static final String GAME_TITLE="坦克大战";
 
-    public static final int FRAME_WIDTH=900;
+    public static final int FRAME_WIDTH=1000;
 
-    public static final int FRAME_HIGHT=700;
+    public static final int FRAME_HIGHT=800;
 
 
     public static final int FRAME_X=1024-FRAME_WIDTH>>1;
@@ -36,7 +36,7 @@ public class Constant {
     /**
      * 字体d的设置
      */
-    public static final Font font = new Font ( "宋体",Font.BOLD,24 );
+    public static final Font font = new Font ( "宋体",Font.BOLD,25 );
 
 
 }
