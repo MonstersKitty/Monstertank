@@ -13,7 +13,7 @@ import java.awt.event.WindowEvent;
  * y游戏的窗口类
  * 所有的游戏展示的内容都要在该类实现
  */
-public class GameFrame extends Frame {
+public class GameFrame extends Frame implements Runnable {
     //游戏状态
     public static int gameState;
     //菜单选项
@@ -25,6 +25,8 @@ public class GameFrame extends Frame {
     public GameFrame(){
         initFrame ();
         initEventListener ();
+        //用于启动刷新率的线程
+        new Thread ( this ).start ();
 
     }
     /**
@@ -42,7 +44,7 @@ public class GameFrame extends Frame {
         //窗口是否可以改变大小
         setResizable ( false );
 
-        repaint ();
+
     }
 
     /**
@@ -188,8 +190,8 @@ public class GameFrame extends Frame {
                         if(menuIndex < 0){
                             menuIndex = Constant.MENUS.length - 1;
                         }
-                        //必须得有repaint没有的话,按下想上或者想下的键是没有反应的,因为根本没有再次触发这几个按键事件
-                        repaint ();
+                        //必须得有repaint没有的话,按下想上或者想下的键是没有反应的,因为根本没有再次触发这几个按键事件 --用线程解决了
+//                        repaint ();
                         break;
                     case KeyEvent.VK_DOWN:
                     case KeyEvent.VK_S:
@@ -198,7 +200,7 @@ public class GameFrame extends Frame {
                         if(menuIndex > Constant.MENUS.length - 1 ){
                             menuIndex = 0;
                         }
-                        repaint ();
+//                        repaint ();
                         break;
 
                 }
@@ -212,4 +214,17 @@ public class GameFrame extends Frame {
         } );
     }
 
+
+    //实现游戏窗口的刷新率
+    @Override
+    public void run () {
+        while (true){
+            repaint ();
+            try {
+                Thread.sleep ( 30 );
+            } catch (InterruptedException e) {
+                e.printStackTrace ();
+            }
+        }
+    }
 }
