@@ -14,15 +14,22 @@ import java.util.List;
  */
 public class Tank {
     //可以用图片替换画的坦克
-//    private static Image[] tankImage;
-//    static {
-//        tankImage = new Image[4];
-//        //分别存有上下左右的图片位置
-//        tankImage[0] = Toolkit.getDefaultToolkit ().createImage ( "图片存放的位置" );
-//        tankImage[0] = Toolkit.getDefaultToolkit ().createImage ( "图片存放的位置" );
-//        tankImage[0] = Toolkit.getDefaultToolkit ().createImage ( "图片存放的位置" );
-//        tankImage[0] = Toolkit.getDefaultToolkit ().createImage ( "图片存放的位置" );
-//    }
+    private static Image[] tankImage;
+    private static Image[] enemyImage;
+    static {
+        tankImage = new Image[4];
+        //分别存有上下左右的图片位置
+        tankImage[0] = Toolkit.getDefaultToolkit ().createImage ( "Image/u.png" );
+        tankImage[0] = Toolkit.getDefaultToolkit ().createImage ( "Image/u.png");
+        tankImage[0] = Toolkit.getDefaultToolkit ().createImage ( "Image/u.png" );
+        tankImage[0] = Toolkit.getDefaultToolkit ().createImage ( "Image/u.png" );
+
+        enemyImage = new Image[4];
+        enemyImage[0] = Toolkit.getDefaultToolkit ().createImage ( "Image/cat.png" );
+        enemyImage[0] = Toolkit.getDefaultToolkit ().createImage ( "Image/cat.png");
+        enemyImage[0] = Toolkit.getDefaultToolkit ().createImage ( "Image/cat.png" );
+        enemyImage[0] = Toolkit.getDefaultToolkit ().createImage ( "Image/cat.png" );
+   }
 
     //四个方向
     public static final int DIR_UP = 0;
@@ -70,18 +77,30 @@ public class Tank {
     public void draw(Graphics g){
         logic ();
         //画坦克自身的方法
-        drawTank(g);
+//        drawTank(g);
+
+        //自己设置的图片画坦克
+        drawImageTank ( g );
+
         //画子弹自身的方法
         drawBullets ( g );
 
-
     }
+
+    /**
+     * 使用自己设置的图片去绘制坦克
+     * @param g
+     */
+   private void drawImageTank(Graphics g){
+       g.drawImage ( tankImage[dir],x-RADIUS,y-RADIUS,null );//这是引用图片作为坦克的形状
+
+   }
+
     private void drawTank(Graphics g){
         g.setColor ( color );
 
 
-        //绘制坦克的形状
-//        g.drawImage ( tankImage[dir],x-RADIUS,y-RADIUS,null );//这是引用图片作为坦克的形状
+        //绘制坦克的形状(使用系统的方式去绘制坦克)
         g.fillOval ( x-RADIUS,y-RADIUS,RADIUS<<1,RADIUS<<1 );
         int endX = x;
         int endY = y;

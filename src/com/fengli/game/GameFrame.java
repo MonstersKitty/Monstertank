@@ -8,12 +8,17 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
 
 /**
  * y游戏的窗口类
  * 所有的游戏展示的内容都要在该类实现
  */
 public class GameFrame extends Frame implements Runnable {
+    //定义一张和屏幕大小一致的图片
+    private BufferedImage bufImg = new BufferedImage ( Constant.FRAME_WIDTH,Constant.FRAME_HIGHT,BufferedImage.TYPE_4BYTE_ABGR );
+
     //游戏状态
     public static int gameState;
     //菜单选项
@@ -62,10 +67,12 @@ public class GameFrame extends Frame implements Runnable {
 
     /**
      * 该方法负责了所有绘制的内容,所有需要在屏幕中显示的内容,该方法不能主动调用,要通过repaint()--然后娶回调该方法
-     * @param g
+     * @param g1
      */
     @Override
-    public void update ( Graphics g ) {
+    public void update ( Graphics g1 ) {
+        //得到图片的画笔
+        Graphics g = bufImg.getGraphics ();
         g.setFont ( Constant.font );
         switch (gameState){
             case Constant.STATE_MENU:
@@ -85,6 +92,8 @@ public class GameFrame extends Frame implements Runnable {
                 break;
 
         }
+        //使用系统画笔,将图片绘制到frame上来
+        g1.drawImage ( bufImg,0,0,null );
     }
 
     private void drawOver ( Graphics g ) {
