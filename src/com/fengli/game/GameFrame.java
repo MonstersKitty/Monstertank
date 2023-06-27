@@ -183,18 +183,22 @@ public class GameFrame extends Frame implements Runnable {
                     case KeyEvent.VK_UP:
                     case KeyEvent.VK_W:
                         myTank.setDir ( Tank.DIR_UP );
+                        myTank.setState ( Tank.STATE_MOVE );
                         break;
                     case KeyEvent.VK_DOWN:
                     case KeyEvent.VK_S:
                         myTank.setDir ( Tank.DIR_DOWN );
+                        myTank.setState ( Tank.STATE_MOVE );
                         break;
                     case KeyEvent.VK_LEFT:
                     case KeyEvent.VK_D:
                         myTank.setDir ( Tank.DIR_LEFT );
+                        myTank.setState ( Tank.STATE_MOVE );
                         break;
                     case KeyEvent.VK_RIGHT:
                     case KeyEvent.VK_A:
                         myTank.setDir ( Tank.DIR_RIGHT );
+                        myTank.setState ( Tank.STATE_MOVE );
                         break;
 
 
@@ -251,9 +255,36 @@ public class GameFrame extends Frame implements Runnable {
             //按键结束执行的事件
             @Override
             public void keyReleased ( KeyEvent e ) {
-                super.keyReleased ( e );
+                int keyCode = e.getKeyCode ();
+                //不同的游戏状态,给出不同的游戏方法
+               if(gameState == Constant.STATE_RUN){
+                   KeyReleasedEventMenu(keyCode);
+               }
             }
         } );
+    }
+    //按键松开了,执行的方法
+    private void KeyReleasedEventMenu ( int keyCode ) {
+
+        switch (keyCode){
+            case KeyEvent.VK_UP:
+            case KeyEvent.VK_W:
+                myTank.setState ( Tank.STATE_STAND);
+                break;
+            case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_S:
+                myTank.setState ( Tank.STATE_STAND);
+                break;
+            case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_D:
+                myTank.setState ( Tank.STATE_STAND);
+                break;
+            case KeyEvent.VK_RIGHT:
+            case KeyEvent.VK_A:
+                myTank.setState ( Tank.STATE_STAND);
+                break;
+
+        }
     }
 
 

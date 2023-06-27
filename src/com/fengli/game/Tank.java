@@ -1,5 +1,6 @@
 package com.fengli.game;
 
+import com.fengli.util.Constant;
 import com.fengli.util.MyUtil;
 import sun.dc.pr.PRError;
 
@@ -34,7 +35,7 @@ public class Tank {
     //攻击力
     private int atk;
     //速度
-    private int speed;
+    private int speed = DEFAULT_SPEED;
     //方向
     private int dir;
     //坦克的状态
@@ -55,7 +56,8 @@ public class Tank {
      * 绘制坦克
      */
     public void draw(Graphics g){
-        g.setColor ( color );
+       logic ();
+       g.setColor ( color );
 
 
         //绘制坦克的形状
@@ -88,6 +90,51 @@ public class Tank {
                 break;
         }
         g.drawLine ( x,y,endX,endY );
+    }
+
+    //坦克的逻辑处理
+    private void logic(){
+        switch (state){
+            case STATE_STAND:
+                break;
+            case STATE_MOVE:
+                move ();
+                break;
+            case STATE_DIE:
+                break;
+
+        }
+    }
+    //坦克移动的方法
+    private void move(){
+        switch (dir){
+            case DIR_UP:
+                y -=speed;
+                if( y < RADIUS ){
+                    y = RADIUS;
+                }
+                break;
+            case DIR_DOWN:
+                y +=speed;
+                if( y > Constant.FRAME_HIGHT - RADIUS ){
+                    y = Constant.FRAME_HIGHT - RADIUS;
+                }
+                break;
+            case DIR_LEFT:
+                x -=speed;
+                if( x < RADIUS){
+                    x = RADIUS;
+                }
+                break;
+            case DIR_RIGHT:
+                x +=speed;
+                if(x > Constant.FRAME_WIDTH-RADIUS){
+                    x = Constant.FRAME_WIDTH-RADIUS;
+                }
+                break;
+
+        }
+
     }
 
     public static int getDirUp () {
