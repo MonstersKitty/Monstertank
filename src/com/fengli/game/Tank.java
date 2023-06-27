@@ -2,6 +2,7 @@ package com.fengli.game;
 
 import com.fengli.util.Constant;
 import com.fengli.util.MyUtil;
+import sun.awt.image.ToolkitImage;
 import sun.dc.pr.PRError;
 
 import java.awt.*;
@@ -12,6 +13,17 @@ import java.util.List;
  *坦克类
  */
 public class Tank {
+    //可以用图片替换画的坦克
+//    private static Image[] tankImage;
+//    static {
+//        tankImage = new Image[4];
+//        //分别存有上下左右的图片位置
+//        tankImage[0] = Toolkit.getDefaultToolkit ().createImage ( "图片存放的位置" );
+//        tankImage[0] = Toolkit.getDefaultToolkit ().createImage ( "图片存放的位置" );
+//        tankImage[0] = Toolkit.getDefaultToolkit ().createImage ( "图片存放的位置" );
+//        tankImage[0] = Toolkit.getDefaultToolkit ().createImage ( "图片存放的位置" );
+//    }
+
     //四个方向
     public static final int DIR_UP = 0;
     public static final int DIR_DOWN = 1;
@@ -42,8 +54,8 @@ public class Tank {
     private int state = STATE_STAND;
     //坦克的颜色
     private Color color;
-    //炮弹
-    private List bullets = new ArrayList<> (  );
+    //炮弹(弹夹,用来管理炮弹)
+    private List<Bullet> bullets = new ArrayList<> (  );
 
     public Tank ( int x , int y , int dir ) {
         this.x = x;
@@ -56,11 +68,20 @@ public class Tank {
      * 绘制坦克
      */
     public void draw(Graphics g){
-       logic ();
-       g.setColor ( color );
+        logic ();
+        //画坦克自身的方法
+        drawTank(g);
+        //画子弹自身的方法
+        drawBullets ( g );
+
+
+    }
+    private void drawTank(Graphics g){
+        g.setColor ( color );
 
 
         //绘制坦克的形状
+//        g.drawImage ( tankImage[dir],x-RADIUS,y-RADIUS,null );//这是引用图片作为坦克的形状
         g.fillOval ( x-RADIUS,y-RADIUS,RADIUS<<1,RADIUS<<1 );
         int endX = x;
         int endY = y;
@@ -91,7 +112,6 @@ public class Tank {
         }
         g.drawLine ( x,y,endX,endY );
     }
-
     //坦克的逻辑处理
     private void logic(){
         switch (state){
@@ -247,5 +267,39 @@ public class Tank {
 
     public void setBullets ( List bullets ) {
         this.bullets = bullets;
+    }
+
+
+    /**
+     * 坦克发射炮弹的功能
+     */
+    public void fire(){
+        int bulletX = x;
+        int bulletY = y;
+        switch (dir){
+            case DIR_UP:
+                bulletY -= 2*RADIUS;
+                break;
+            case DIR_DOWN:
+                bulletY += 2*RADIUS;
+                break;
+            case DIR_LEFT:
+                bulletX -= 2*RADIUS;
+                break;
+            case DIR_RIGHT:
+                bulletX += 2*RADIUS;
+                break;
+        }
+        Bullet bullet = new Bullet (bulletX,bulletY,dir,atk,color);
+        bullets.add ( bullet );
+    }
+
+    /**
+     *将坦克发射的子弹,绘制在界面上
+     */
+    private void drawBullets(Graphics g){
+        for ( Bullet bullet : bullets ) {
+            bullet.draw ( g );
+        }
     }
 }
